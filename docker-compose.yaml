@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+#  db_service:
+#    image: mysql:latest
+#    restart: always
+#    networks:
+#      - user_network
+#    environment:
+#      MYSQL_ALLOW_EMPTY_PASSWORD: true
+#      MYSQL_RANDOM_ROOT_PASSWORD: false
+#      MYSQL_USER: sa
+#      MYSQL_PASSWORD: 123456
+#      MYSQL_DATABASE: hdv_hotel_service
+#    ports:
+#      - "3307:3307"
+#    volumes:
+#      - user-mysql-data:/var/lib/mysql
+  hotel-service:
+    container_name: hotel-service-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-hotel-service
+    ports:
+      - "8081:8081"
+    networks:
+      - user_network
+    volumes:
+      - ./:/app
+    environment:
+      - DB_NAME=hdv_hotel_service
+      - DB_HOST=mysql-hotel-service
+      - DB_PORT=3306
+      - DB_USER=sa
+      - DB_PASS=123456
+  mysql-hotel-service:
+    image: mysql:latest
+    container_name: mysql-hotel-service-container
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: false
+      MYSQL_RANDOM_ROOT_PASSWORD: false
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: hdv_hotel_service
+    ports:
+      - "3306:3306"
+    volumes:
+      - hotel-mysql-data:/var/lib/mysql
+      - hotel-mysql-config-deamond:/etc/mysql/conf.d
+    networks:
+      - user_network
+
+
+
+networks:
+  user_network:
+    driver: bridge
+volumes:
+  hotel-mysql-config-deamond:
+  hotel-mysql-data:
