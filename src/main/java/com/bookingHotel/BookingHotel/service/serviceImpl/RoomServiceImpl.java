@@ -1,6 +1,7 @@
 package com.bookingHotel.BookingHotel.service.serviceImpl;
 
 import com.bookingHotel.BookingHotel.dto.room.RoomNewDto;
+import com.bookingHotel.BookingHotel.dto.room.RoomPriceDto;
 import com.bookingHotel.BookingHotel.dto.room.RoomResponseDto;
 import com.bookingHotel.BookingHotel.dto.room.RoomResponseEditDto;
 import com.bookingHotel.BookingHotel.entity.manyToMany.Hotel_roomClass;
@@ -103,5 +104,13 @@ public class RoomServiceImpl implements RoomService {
                                 .collect(Collectors.toList());
 
         return roomResponseDtos;
+    }
+
+    @Override
+    public RoomPriceDto getRoomPriceByIdRoom(Integer roomId) {
+        Optional<Room> roomOptional = roomRepository.findById(roomId);
+        if (roomOptional.isEmpty())
+            return null;
+        return new RoomPriceDto(roomOptional.get().getHotel_roomClass().getRoomPrice());
     }
 }

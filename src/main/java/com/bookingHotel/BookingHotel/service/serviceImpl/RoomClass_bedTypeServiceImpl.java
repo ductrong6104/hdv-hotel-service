@@ -39,6 +39,7 @@ public class RoomClass_bedTypeServiceImpl implements RoomClass_bedTypeService {
 
     @Override
     public List<BedType> getBedTypeNotByHotelId(Integer hotelId) {
+
         return List.of();
     }
 }

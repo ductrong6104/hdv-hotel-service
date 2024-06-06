@@ -15,4 +15,6 @@ import java.util.Objects;
 public interface RoomClass_bedTypeRepository extends JpaRepository<RoomClass_bedType, Integer> {
     @Procedure(procedureName = "sp_find_bedTypes_by_hotelId")
     public List<Object[]> getBedTypesByHotelId(@Param("hotelId") Integer hotelId);
+
+
 }

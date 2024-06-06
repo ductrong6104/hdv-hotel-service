@@ -37,6 +37,15 @@ public class RoomController {
         responseData.setData(roomService.getRoomById(id));
         return ResponseEntity.status(HttpStatus.OK).body(responseData);
     }
+    @GetMapping("/roomPrice")
+    public ResponseEntity<?> getRoomPriceByIdRoom(@RequestParam(name = "roomId") Integer roomId){
+        System.out.println("\n \n aba\n \n");
+        ResponseData responseData = new ResponseData();
+        responseData.setMessage("get success data");
+        responseData.setStatus(200);
+        responseData.setData(roomService.getRoomPriceByIdRoom(roomId));
+        return ResponseEntity.status(HttpStatus.OK).body(responseData);
+    }
     @GetMapping("/roomsByHotelIdAndMaxPerson")
     public ResponseEntity<?> getRoomsByHotelIdAndMaxPerson(@RequestParam(name = "hotelId") Integer hotelId ,@RequestParam(name = "maxPerson") Integer maxPerson){
         System.out.println("\n \n aba\n \n");

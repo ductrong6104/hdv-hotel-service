@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  hotel-service:
+#    container_name: hotel-service-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-hotel-service
+    ports:
+      - "8081:8081"
+    networks:
+      - hotel_network
+#    volumes:
+#      - ./:/app
+    environment:
+      - DB_NAME=hdv_hotel_service
+      - DB_HOST=mysql-hotel-service
+      - DB_PORT=3306
+      - DB_USER=sa
+      - DB_PASS=1
+#  mssql-hotel-service:
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    container_name: mssql-hotel-service-container
+#    restart: always
+#    environment:
+#      - SA_PASSWORD=Trong123!
+#      - ACCEPT_EULA=Y
+#      - MSSQL_PID=Standard
+#      - MSSQL_DATABASE=hdv_hotel_service
+#    ports:
+#      - "1433:1433"
+#    volumes:
+#      - hotel-mssql-data-2:/var/opt/mssql
+#    networks:
+#      - user_network
+  mysql-hotel-service:
+    image: mysql:latest
+#    container_name: mysql-hotel-service-container
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: false
+      MYSQL_RANDOM_ROOT_PASSWORD: false
+#      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: 1
+      MYSQL_DATABASE: hdv_hotel_service
+#    ports:
+#      - "3307:3306"
+    volumes:
+      - hotel-mysql-data:/var/lib/mysql
+      - hotel-mysql-config-deamond:/etc/mysql/conf.d
+    networks:
+      - hotel_network
+
+
+
+networks:
+  hotel_network:
+    driver: bridge
+volumes:
+  hotel-mysql-config-deamond:
+  hotel-mysql-data:
