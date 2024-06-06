@@ -37,7 +37,7 @@ public class RoomController {
         responseData.setData(roomService.getRoomById(id));
         return ResponseEntity.status(HttpStatus.OK).body(responseData);
     }
-    @GetMapping("/roomPrice")
+    @GetMapping("/roomPriceByIdRoom")
     public ResponseEntity<?> getRoomPriceByIdRoom(@RequestParam(name = "roomId") Integer roomId){
         System.out.println("\n \n aba\n \n");
         ResponseData responseData = new ResponseData();
