@@ -12,4 +12,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("SELECT m FROM Room m " +
             "WHERE m.hotel_roomClass.id IN (SELECT hrc.id from Hotel_roomClass hrc WHERE hrc.hotel.id = ?1)")
     public List<Room> findByHotelId(Integer hotelId);
+    @Query("SELECT m FROM Room m " +
+            "WHERE m.hotel_roomClass.id IN (SELECT hrc.id from Hotel_roomClass hrc WHERE hrc.hotel.id = ?1) AND m.maxPerson >= ?2")
+    public List<Room> findByHotelIdAndMaxPerson(Integer hotelId, Integer maxPerson);
 }
